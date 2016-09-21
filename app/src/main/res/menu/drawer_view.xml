@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/type"
+        android:checkable="false">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/allMember"
+                    android:icon="@drawable/ic_dashboard"
+                    android:title="All member" />
+                <item
+                    android:id="@+id/yourFriends"
+                    android:icon="@drawable/ic_dashboard"
+                    android:title="Your friends" />
+                <item
+                    android:id="@+id/chat"
+                    android:icon="@drawable/ic_dashboard"
+                    android:title="Chat" />
+                <item
+                    android:id="@+id/signout"
+                    android:icon="@drawable/ic_dashboard"
+                    android:title="Sign Out" />
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/setting"
+        android:title="Setting" />
+</menu>

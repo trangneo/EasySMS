@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "683453064299",
+    "firebase_url": "https://easysms-c4902.firebaseio.com",
+    "project_id": "easysms-c4902",
+    "storage_bucket": "easysms-c4902.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683453064299:android:4000ca5af0a036b9",
+        "android_client_info": {
+          "package_name": "com.example.poiuyt.easysms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683453064299-dkeqaednmuonlrbn0iahia0h5ha44c6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.poiuyt.easysms",
+            "certificate_hash": "2B9B35E53EE20804A39BED7E1E52746BCDDEB7D0"
+          }
+        },
+        {
+          "client_id": "683453064299-5h2i33gff27mi9vnpl54jk0snjpaq2re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2eg-hcrv1Z_ef-Fk9UEQ64IgrvV9kBfI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683453064299-5h2i33gff27mi9vnpl54jk0snjpaq2re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="50dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.poiuyt.easysms.ui.acitivity.SignInActivity">
+
+    <TextView
+        android:id="@+id/tvHello"
+        style="@style/TextViewOnlyShow"
+        android:text="WellCome to EasySMS"
+        android:textSize="@dimen/text_size_large" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til"
+        style="@style/TextInput">
+
+        <EditText
+            android:id="@+id/edtUserName"
+            style="@style/EditText"
+            android:hint="@string/user_name"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        style="@style/TextViewOnlyShow"
+        android:text="@string/user_name_policy" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til1"
+        style="@style/TextInput">
+
+        <EditText
+            android:id="@+id/edtEmail"
+            style="@style/EditText"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        style="@style/TextViewOnlyShow"
+        android:text="@string/email_policy" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til2"
+        style="@style/TextInput">
+
+        <EditText
+            android:id="@+id/edtPassWord"
+            style="@style/EditText"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        style="@style/TextViewOnlyShow"
+        android:text="@string/password_policy" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnFinish"
+            style="@style/Button"
+            android:text="Finish" />
+    </LinearLayout>
+</LinearLayout>
