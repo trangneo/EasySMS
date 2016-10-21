@@ -51,4 +51,10 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/text_size_middle</item>
     </style>
-</resources>
+    <style name="toolbar" >
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+    </resources>

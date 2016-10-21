@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.ui.adapter;
+package com.easySMS.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.poiuyt.easysms.R;
-import com.example.poiuyt.easysms.model.MemberModel;
-import com.example.poiuyt.easysms.ui.acitivity.MainActivity;
-import com.example.poiuyt.easysms.util.Constants;
+import com.easySMS.R;
+import com.easySMS.model.MemberModel;
+import com.easySMS.ui.acitivity.MainActivity;
+import com.easySMS.util.Constants;
 
 import java.util.List;
 

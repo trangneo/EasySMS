@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.ui.acitivity;
+package com.easySMS.ui.acitivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
-import com.example.poiuyt.easysms.R;
-import com.example.poiuyt.easysms.model.MemberModel;
-import com.example.poiuyt.easysms.ui.fragment.ListFragment;
-import com.example.poiuyt.easysms.util.Constants;
+import com.easySMS.R;
+import com.easySMS.model.MemberModel;
+import com.easySMS.ui.fragment.ListFragment;
+import com.easySMS.util.Constants;
+import com.easySMS.util.ShareReferenceManager;
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -28,9 +29,8 @@ import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-
 public class MainActivity extends AfterSignInBaseActivity {
-    static final String TAG = "Trang";
+    static final String TAG = MainActivity.class.getSimpleName();
     ViewPager viewPager;
     TabLayout tabLayout;
     PagerAdapter adapter;
@@ -56,6 +56,8 @@ public class MainActivity extends AfterSignInBaseActivity {
             intent.putExtra(Constants.SENDER, sender);
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            overridePendingTransition(R.anim.visi_in, R.anim.visi_out);
+
         }
     };
 
@@ -63,6 +65,7 @@ public class MainActivity extends AfterSignInBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initLayout();
+
     }
 
     void initLayout() {
@@ -71,10 +74,10 @@ public class MainActivity extends AfterSignInBaseActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         yourId = firebaseUser.getUid();
-
         yourEmail = firebaseUser.getEmail();
         yourName = firebaseUser.getDisplayName();
-        Log.d(TAG + "user", yourName + "----" + yourEmail + "--" + yourId);
+
+        Log.d(TAG + "Trang", yourId + "....");
         tvUserName.setText(yourName);
         mFirebaseChatRef = new Firebase(Constants.URL);
         mFireChatUsersRef = new Firebase(Constants.URL).child(Constants.USER);
@@ -92,7 +95,6 @@ public class MainActivity extends AfterSignInBaseActivity {
 
     void setAuthenticatedUser(AuthData authData) {
         if (authData == null) {
-            Log.e(TAG, "authData null ");
             navigateToLogin();
         }
     }
@@ -100,29 +102,20 @@ public class MainActivity extends AfterSignInBaseActivity {
     void queryFireChatUsers() {
         Query query = mFireChatUsersRef.orderByKey();
         query.addChildEventListener(new ChildEventListener() {
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()) {
                     String userId = dataSnapshot.getKey();
                     if (!userId.equals(yourId)) {
                         MemberModel user = dataSnapshot.getValue(MemberModel.class);
-                        user.setmRecipientUid(userId);
-                        mUsersKeyList.add(user.getYourName());
+                        mUsersKeyList.add(user.getUsername());
                         listUser.add(user);
                         adapter.update();
                     } else {
                         your = dataSnapshot.getValue(MemberModel.class);
-//                        your.setCreated("");
-//                        your.setEmail("");
-//                        your.setUsername("");
-//                        your.setPassword("");
-//                        your.setmRecipientUid("");
-                        your.setConnection("online");
-                        your.setYourEmail(yourEmail);
-                        your.setYourName(yourName);
-                        your.setYourId(yourId);
-                        your.setYourCreatedAt(your.getCreated());
+//                        your.setConnection("online");
+//                        your.setUId(yourId + "");
+
                     }
                 }
             }
@@ -131,13 +124,16 @@ public class MainActivity extends AfterSignInBaseActivity {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()) {
                     String userUid = dataSnapshot.getKey();
-                    if (!userUid.equals(yourId)) {
+                    if (userUid.equals(yourId)) {
+                        signOut();
+                    } else {
                         MemberModel user = dataSnapshot.getValue(MemberModel.class);
-                        user.setmRecipientUid(userUid);
-                        user.setYourEmail(yourEmail);
-                        user.setYourId(yourId);
-                        int index = mUsersKeyList.indexOf(userUid);
-                        listUser.add(index, user);
+                        for (int i = 0; i < mUsersKeyList.size(); i++) {
+                            if (mUsersKeyList.get(i).equals(user.getUsername())) {
+                                listUser.set(i, user);
+                                adapter.update();
+                            }
+                        }
                     }
                 }
             }
@@ -168,8 +164,6 @@ public class MainActivity extends AfterSignInBaseActivity {
         });
 
         myConnectionsStatusRef = mFireChatUsersRef.child(yourId).child(Constants.CONNECTION);
-
-        // Indication of connection status
         mConnectedListener = mFirebaseChatRef.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -183,16 +177,14 @@ public class MainActivity extends AfterSignInBaseActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
-
     }
 
     void navigateToLogin() {
         Log.e(TAG, "navigate toLogin");
         Intent intent = new Intent(this, SignInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -216,9 +208,6 @@ public class MainActivity extends AfterSignInBaseActivity {
 
         Log.e(TAG, "I am onDestroy");
         mUsersKeyList.clear();
-
-        // Stop all listeners
-        // Make sure to check if they have been initialized
         if (mListenerUsers != null) {
             mFireChatUsersRef.removeEventListener(mListenerUsers);
         }
@@ -228,19 +217,19 @@ public class MainActivity extends AfterSignInBaseActivity {
     }
 
     @Override
-    public void LogOut() {
+    public void signOut() {
         if (this.mAuthData != null) {
             myConnectionsStatusRef.setValue(Constants.OFFLINE);
             mFirebaseChatRef.unauth();
             setAuthenticatedUser(null);
         }
-        Log.d(TAG + "user2", yourName + "----" + yourEmail + "--" + yourId);
-        Log.e("Trang", "Log out");
+        ShareReferenceManager.deleteData();
         Intent intent = new Intent(this, SignInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         finish();
         startActivity(intent);
+        overridePendingTransition(R.anim.visi_in, R.anim.visi_out);
 
     }
 

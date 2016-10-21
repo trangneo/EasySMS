@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.ui.acitivity;
+package com.easySMS.ui.acitivity;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -11,8 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.poiuyt.easysms.R;
-
+import com.easySMS.R;
 /**
  * Created by poiuyt on 8/4/16.
  */
@@ -29,7 +28,6 @@ public class AfterSignInBaseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         initComponent();
-
     }
 
     public void initComponent() {
@@ -65,7 +63,7 @@ public class AfterSignInBaseActivity extends BaseActivity {
                                 setViewPager(2);
                                 break;
                             case R.id.signout:
-                                LogOut();
+                                signOut();
                                 break;
                             default:
                                 return true;
@@ -81,7 +79,7 @@ public class AfterSignInBaseActivity extends BaseActivity {
     void setViewPager(int i) {
     }
 
-    public void LogOut() {
+    public void signOut() {
 
     }
 

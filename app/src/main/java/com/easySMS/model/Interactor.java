@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.model;
+package com.easySMS.model;
 
 /**
  * Created by poiuyt on 9/16/16.

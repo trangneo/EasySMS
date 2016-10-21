@@ -1,11 +1,11 @@
-package com.example.poiuyt.easysms.ui.acitivity;
+package com.easySMS.ui.acitivity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.poiuyt.easysms.util.Util;
+import com.easySMS.util.Util;
 
 /**
  * Created by poiuyt on 9/18/16.

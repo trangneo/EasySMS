@@ -1,77 +1,76 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#d3dae2">
 
-    <android.support.design.widget.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:title="Trang Neo"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/action_bar"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        <TextView
-            android:id="@+id/tvTitle"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:minHeight="@dimen/abc_action_bar_default_height_material"
+                android:background="?attr/colorPrimary"  />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="12dp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_middle"
+                android:textStyle="normal" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="easySMS"
-            android:textAllCaps="false"
-            android:layout_marginBottom="12dp"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_middle"
-            android:textStyle="normal" />
+            android:layout_above="@+id/senderContainer"
+            android:layout_below="@+id/action_bar"
+            android:paddingBottom="10dp" />
 
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/chat_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <RelativeLayout
-        android:id="@+id/senderContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp">
-
-        <EditText
-            android:id="@+id/edtChat"
+        <RelativeLayout
+            android:id="@+id/senderContainer"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_toLeftOf="@+id/btnSend"
-            android:gravity="top"
-            android:background="@android:color/transparent"
-            android:hint="Type your message"
-            android:textColor="#555555"
-            android:textSize="15sp" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:padding="5dp">
 
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@+id/chat_user_message"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="0dp"
-            android:background="@mipmap/chat_icon" />
+            <EditText
+                android:id="@+id/edtChat"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@+id/btnSend"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:inputType="textCapSentences"
+                android:hint="Type your message"
+                android:textColor="#555555"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_button"
+                android:padding="2dp" />
+        </RelativeLayout>
+
     </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/progress_for_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone" />
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

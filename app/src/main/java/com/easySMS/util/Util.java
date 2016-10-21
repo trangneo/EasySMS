@@ -1,12 +1,13 @@
-package com.example.poiuyt.easysms.util;
+package com.easySMS.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.Toast;
 
-import com.example.poiuyt.easysms.R;
-import com.example.poiuyt.easysms.data.User;
+import com.easySMS.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,12 +51,17 @@ public  class Util {
     public static boolean isEmptyString(String string) {
         return string == null || string.trim().equals("") || string.trim().length() <= 0;
     }
-    public static void saveMyProfile( Context context, User user) {
-//        SharedPreferences pref = context.getSharedPreferences(Constants.SAVE_DATA, Context.MODE_PRIVATE);
-//        String profile = new Gson().toJson(user, User.class);
-//        SharedPreferences.Editor editor = pref.edit();
-//        editor.putString(PROFILE, profile);
-//        editor.apply();
+
+    /**
+     *     check internet connection ----/
+
+     */
+
+    public static  boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-    
+
+
 }

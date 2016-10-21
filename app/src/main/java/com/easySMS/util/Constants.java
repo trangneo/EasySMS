@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.util;
+package com.easySMS.util;
 
 /**
  * Created by poiuyt on 9/12/16.
@@ -7,7 +7,7 @@ package com.example.poiuyt.easysms.util;
 public class Constants {
 
 
-    public static final String URL = "https://easysms-c4902.firebaseio.com";
+    public static final String URL = "https://easysms-5c335.firebaseio.com";
 
     public static final String USER = "member";
 

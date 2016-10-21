@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.inter;
+package com.easySMS.inter;
 
 import java.util.Map;
 

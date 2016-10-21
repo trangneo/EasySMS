@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.poiuyt.easysms">
+    package="com.easySMS">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.easySMS.EasySMS"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".EasySMS"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.acitivity.SplashActivity"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.acitivity.SignInActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -23,18 +33,17 @@
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.FOURTH" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.acitivity.ChatScreenActivity"
-            android:parentActivityName=".ui.acitivity.MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:parentActivityName="com.easySMS.ui.acitivity.MainActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SECOND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category." />
             </intent-filter>
         </activity>
         <activity
@@ -42,7 +51,6 @@
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.THIRD" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.ui.acitivity;
+package com.easySMS.ui.acitivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.poiuyt.easysms.R;
-import com.example.poiuyt.easysms.data.User;
-import com.example.poiuyt.easysms.util.Constants;
-import com.example.poiuyt.easysms.util.Util;
+import com.easySMS.R;
+import com.easySMS.model.Member;
+import com.easySMS.util.Constants;
+import com.easySMS.util.ShareReferenceManager;
+import com.easySMS.util.Util;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +26,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
-import static com.example.poiuyt.easysms.R.id.edtPassWord;
+
 
 /**
  * In
@@ -33,11 +34,13 @@ import static com.example.poiuyt.easysms.R.id.edtPassWord;
  */
 
 public class SignUpActivity extends BaseActivity {
+    static final String TAG = MainActivity.class.getSimpleName();
+
     public Button btnFinish;
     public TextView tvHello;
     public EditText edtUserName, edtPassword, edtEmail;
     public Firebase memberData;
-    public User newMember;
+    public Member newMember;
     public FirebaseUser user;
     public FirebaseAuth mAuth;
     public FirebaseAuth.AuthStateListener mAuthListener;
@@ -49,13 +52,15 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
+        overridePendingTransition(R.anim.visi_in, 0);
+
         mAuth = FirebaseAuth.getInstance();
         initComponent();
         bindHandler();
     }
 
     public void initComponent() {
-        edtPassword = (EditText) findViewById(edtPassWord);
+        edtPassword = (EditText) findViewById(R.id.edtPassWord);
         edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtUserName = (EditText) findViewById(R.id.edtUserName);
         btnFinish = (Button) findViewById(R.id.btnFinish);
@@ -88,7 +93,7 @@ public class SignUpActivity extends BaseActivity {
                                              password = edtPassword.getText().toString().trim();
                                              String alert = "";
 
-                                             if (Util.isEmptyString(userName)||userName.length()>32||userName.length()<3) {
+                                             if (Util.isEmptyString(userName) || userName.length() > 32 || userName.length() < 3) {
                                                  alert += getResources().getString(R.string.name_miss) + "\n";
                                              } else {
                                                  if (Util.isEmptyString(email)) {
@@ -111,19 +116,23 @@ public class SignUpActivity extends BaseActivity {
                                                  alert = alert.substring(0, alert.length() - 1);
                                                  Util.showToast(SignUpActivity.this, alert);
                                              } else {
-                                                 showProgressDialog();
-                                                 mAuth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
-                                                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                                                             @Override
-                                                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                                                 if (!task.isSuccessful()) {
-                                                                     Util.showToast(SignUpActivity.this, "Authentication failed!");
-                                                                 } else {
-                                                                     uptoDatabase();
-                                                                     uptoAuthData(task);
+                                                 if (!Util.isOnline(SignUpActivity.this)) {
+                                                     Util.showToast(SignUpActivity.this, getResources().getString(R.string.network_error));
+                                                 } else {
+                                                     showProgressDialog();
+                                                     mAuth.createUserWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
+                                                             .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                                                                 @Override
+                                                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                     if (!task.isSuccessful()) {
+                                                                         hideProgressDialog();
+                                                                         Util.showToast(SignUpActivity.this, "Authentication failed!");
+                                                                     } else {
+                                                                         uptoAuthData(task);
+                                                                     }
                                                                  }
-                                                             }
-                                                         });
+                                                             });
+                                                 }
                                              }
                                          }
                                      }
@@ -141,8 +150,8 @@ public class SignUpActivity extends BaseActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     hideProgressDialog();
-                    Log.e("Trang", user.getDisplayName() + ".." + user.getToken(true) + "..." + user.getUid() + "..." + user.getEmail());
                     gotoMain();
+                    uptoDatabase();
                 }
             }
         });
@@ -150,14 +159,31 @@ public class SignUpActivity extends BaseActivity {
 
     public void uptoDatabase() {
         user = mAuth.getCurrentUser();
-        newMember = new User(userName, email, password, String.valueOf(new Date().getTime()));
+        newMember = new Member(userName, email, password, String.valueOf(new Date().getTime()),"online");
+        ShareReferenceManager.saveData(newMember);
         memberData.child(Constants.USER).child(user.getUid()).setValue(newMember);
     }
 
     public void gotoMain() {
+
         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.visi_in, R.anim.visi_out);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideProgressDialog();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(R.anim.visi_in, R.anim.visi_out);
+    }
 }

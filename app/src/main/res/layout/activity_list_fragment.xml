@@ -18,7 +18,6 @@
             app:tabGravity="fill"
             app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="1dp"
-
             app:tabSelectedTextColor="@color/colorAccent"
             app:tabTextAppearance="@style/MyCustomTextAppearance"
             app:tabTextColor="@android:color/white"/>

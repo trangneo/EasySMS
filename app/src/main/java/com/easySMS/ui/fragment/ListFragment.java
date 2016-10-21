@@ -1,4 +1,4 @@
-package com.example.poiuyt.easysms.ui.fragment;
+package com.easySMS.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.poiuyt.easysms.R;
-import com.example.poiuyt.easysms.model.MemberModel;
-import com.example.poiuyt.easysms.ui.acitivity.MainActivity;
-import com.example.poiuyt.easysms.ui.adapter.ListDataAdapter;
-
 import java.util.List;
+
+import com.easySMS.R;
+import com.easySMS.model.MemberModel;
+import com.easySMS.ui.acitivity.MainActivity;
+import com.easySMS.ui.adapter.ListDataAdapter;
 
 /**
  * Created by poiuyt on 8/4/16.
@@ -31,6 +31,7 @@ public class ListFragment extends Fragment {
     String connection;
     private ListDataAdapter adapter;
 
+    public ListFragment (){}
     public ListFragment(Context context, List<MemberModel> listUser, List<String> listLastMessage, String connection, MainActivity.Callback callback) {
         this.context = context;
         this.listLastMessage = listLastMessage;
@@ -46,7 +47,7 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(
                 R.layout.fragment_item, container, false);
-        if(callback==null){
+        if (callback == null) {
             Log.d("Trangfragment", "callback null");
         }
         rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
